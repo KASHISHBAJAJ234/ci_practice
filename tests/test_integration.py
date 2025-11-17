@@ -10,6 +10,6 @@ def test_integration_weather():
     try:
         r = requests.get("http://127.0.0.1:5000/weather?city=Delhi")
         assert r.status_code == 200
-        assert "data" in r.json
+        assert "data" in r.json()
     finally:
         process.terminate()

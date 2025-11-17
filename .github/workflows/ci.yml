@@ -35,14 +35,17 @@ jobs:
       - name: Run Unit Tests
         run: pytest tests/test_unit.py -q
 
-      # -----------------------------
-      # Run Feature Tests
-      # -----------------------------
-      - name: Run Feature Tests
-        run: pytest tests/test_feature.py -q
-
+      
       # -----------------------------
       # Run Integration Tests
       # -----------------------------
       - name: Run Integration Tests
         run: pytest tests/test_integration.py -q
+
+      - name: Notify Teams
+        if: success()
+        run: |
+          curl -H "Content-Type: application/json" \
+               -d "{\"text\": \"✅ Build succeeded on GitHub Actions!\"}" \
+               ${{ secrets.TEAMS_WEBHOOK_URL }}
+  

@@ -22,10 +22,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Unit Tests
-        run: pytest tests/unit.py -q
+        run: pytest test/unit.py -q
 
       - name: Run Feature Tests
-        run: pytest tests/feature.py -q
+        run: pytest test/Feature_test.py -q
 
       - name: Run Integration Tests
-        run: pytest tests/integration.py -q
+        run: pytest test/integration.py -q

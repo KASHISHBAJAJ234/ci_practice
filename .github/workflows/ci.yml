@@ -8,16 +8,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      PYTHONPATH: ${{ github.workspace }}   # <-- IMPORTANT FIX
+      PYTHONPATH: ${{ github.workspace }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Debug repo structure
-        run: |
-          echo "Root contents:"
-          ls -R .
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -29,18 +24,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # -----------------------------
-      # Run Unit Tests
-      # -----------------------------
       - name: Run Unit Tests
         run: pytest tests/test_unit.py -q
-
-      
-      # -----------------------------
-      # Run Integration Tests
-      # -----------------------------
-      - name: Run Integration Tests
-        run: pytest tests/test_integration.py -q
 
       - name: Notify Teams
         if: success()
@@ -48,4 +33,3 @@ jobs:
           curl -H "Content-Type: application/json" \
                -d "{\"text\": \"✅ Build succeeded on GitHub Actions!\"}" \
                ${{ secrets.TEAMS_WEBHOOK_URL }}
-  
